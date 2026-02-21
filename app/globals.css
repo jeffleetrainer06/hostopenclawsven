@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #ef4444;
+  --primary-dark: #dc2626;
+  --bg-dark: #0f1419;
+  --bg-card: #1a1f2e;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.card {
+  @apply bg-gray-800 rounded-lg p-6 border border-gray-700;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors;
+}
+
+.btn-primary {
+  @apply bg-red-500 hover:bg-red-600 text-white;
+}
+
+.btn-secondary {
+  @apply bg-gray-700 hover:bg-gray-600 text-white;
+}
+
+.sidebar-item {
+  @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer;
+}
+
+.sidebar-item:hover {
+  @apply bg-gray-800;
+}
+
+.sidebar-item.active {
+  @apply bg-red-500 text-white;
+}
+
+.input {
+  @apply bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-red-500;
+}
+
+.metric-card {
+  @apply card;
+}
+
+.metric-value {
+  @apply text-4xl font-bold mb-2;
+}
+
+.metric-label {
+  @apply text-gray-400 text-sm uppercase tracking-wide;
+}
