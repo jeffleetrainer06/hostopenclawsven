@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const customers = getCustomers();
     
-    const activeLeads = customers.filter(c => c.status !== 'closed').length;
+    const activeLeads = customers.filter((c: any) => c.status !== 'closed').length;
     const testDrives = 0; // TODO: Implement test drive tracking
     const monthlySales = 0; // TODO: Implement sales tracking
     const salesTarget = 20;
