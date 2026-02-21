@@ -30,7 +30,7 @@ export const customerTools: CustomerTool[] = [
   {
     id: 'toyota-configurator',
     name: 'Toyota Configurator',
-    url: 'https://www.toyota.com/configurator/?bap_guid=toyota-client-tools',
+    url: 'https://www.toyota.com/configurator/?bap_guid=d60215aa-72b4-419f-b5b9-c81407453f4e',
     icon: '🎨',
     description: 'Build and customize your perfect Toyota - colors, packages, and accessories',
     category: 'buying',
