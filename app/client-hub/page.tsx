@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Sidebar from '@/components/Sidebar';
 import CustomerList from '@/components/CustomerList';
 import ChatWindow from '@/components/ChatWindow';
+import ToolsSidebar from '@/components/ToolsSidebar';
 import AddCustomerModal from '@/components/AddCustomerModal';
 
 interface Customer {
@@ -113,10 +114,13 @@ export default function ClientHub() {
 
           {/* Chat Window */}
           {selectedCustomer ? (
-            <ChatWindow
-              customer={selectedCustomer}
-              onCustomerUpdate={loadCustomers}
-            />
+            <>
+              <ChatWindow
+                customer={selectedCustomer}
+                onCustomerUpdate={loadCustomers}
+              />
+              <ToolsSidebar customerId={selectedCustomer.id} />
+            </>
           ) : (
             <div className="flex-1 flex items-center justify-center bg-gray-900">
               <div className="text-center text-gray-400">
