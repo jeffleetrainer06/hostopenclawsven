@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getConversations, addMessage, getCustomer } from '@/lib/database';
+import { getConversations, addMessage, getCustomer } from '@/lib/database-optional';
 
 export async function GET(
   request: Request,

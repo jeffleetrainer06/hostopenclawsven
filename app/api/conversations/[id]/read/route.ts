@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { markAsRead } from '@/lib/database';
+import { markAsRead } from '@/lib/database-optional';
 
 export async function POST(
   request: Request,

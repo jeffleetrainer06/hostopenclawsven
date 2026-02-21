@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getUsageStats, getUsageByTaskType } from '@/lib/database';
+import { getUsageStats, getUsageByTaskType } from '@/lib/database-optional';
 
 export async function GET(request: Request) {
   try {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getOpenClawClient } from '@/lib/openclaw';
-import { getCustomer, trackUsage } from '@/lib/database';
+import { getCustomer, trackUsage } from '@/lib/database-optional';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 

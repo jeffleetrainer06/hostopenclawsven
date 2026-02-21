@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getCustomer, getConversations, getModelPreference, trackUsage } from '@/lib/database';
+import { getCustomer, getConversations, getModelPreference, trackUsage } from '@/lib/database-optional';
 import { getOpenClawClient } from '@/lib/openclaw';
 
 export async function POST(

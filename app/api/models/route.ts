@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getModelPreferences, setModelPreference } from '@/lib/database';
+import { getModelPreferences, setModelPreference } from '@/lib/database-optional';
 
 export async function GET() {
   try {
