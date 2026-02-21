@@ -1,11 +1,18 @@
 import { NextResponse } from 'next/server';
 import { getOpenClawClient } from '@/lib/openclaw';
 import { getCustomer, trackUsage } from '@/lib/database';
+import { getMockInventory, filterInventory, scoreVehicleMatch } from '@/lib/inventory-scraper';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-// Mock inventory for demo
-const MOCK_INVENTORY = [
+// Get inventory (will fetch live inventory in production)
+async function getInventory() {
+  // TODO: Replace with fetchLiveInventory() when scraper is ready
+  return getMockInventory();
+}
+
+// Old mock data (kept for reference, but now using inventory-scraper.ts)
+const OLD_MOCK_INVENTORY = [
   {
     stock: "T12345",
     year: 2022,
@@ -85,8 +92,12 @@ const MOCK_INVENTORY = [
 
 export async function POST(request: Request) {
   try {
+    const body = await request.json();
+    
+    // Support both structured input and natural language
     const {
       customer_id,
+      natural_language, // e.g., "budget $25k, SUV, low miles, certified preferred"
       budget,
       vehicle_type,
       features,
@@ -94,7 +105,7 @@ export async function POST(request: Request) {
       year_max,
       max_miles,
       colors
-    } = await request.json();
+    } = body;
 
     // Get customer info if provided
     let customer = null;
@@ -102,6 +113,32 @@ export async function POST(request: Request) {
       customer = getCustomer(customer_id) as any;
     }
 
+    // Get current inventory
+    const fullInventory = await getInventory();
+    
+    // Filter inventory if structured filters provided
+    let inventory = fullInventory;
+    if (!natural_language && (budget || vehicle_type || features || max_miles)) {
+      const filters: any = {};
+      
+      // Parse budget
+      if (budget) {
+        const budgetMatch = budget.match(/\$?(\d+)k?/i);
+        if (budgetMatch) {
+          const maxBudget = parseInt(budgetMatch[1]) * (budget.includes('k') ? 1000 : 1);
+          filters.maxPrice = maxBudget;
+        }
+      }
+      
+      if (vehicle_type) filters.vehicleType = vehicle_type;
+      if (features) filters.features = Array.isArray(features) ? features : features.split(',').map((f: string) => f.trim());
+      if (year_min) filters.minYear = year_min;
+      if (year_max) filters.maxYear = year_max;
+      if (max_miles) filters.maxMileage = max_miles;
+      
+      inventory = filterInventory(fullInventory, filters);
+    }
+    
     // Load agent prompt
     const agentPrompt = readFileSync(
       join(process.cwd(), 'agents', 'used-vehicle-match.md'),
@@ -109,19 +146,17 @@ export async function POST(request: Request) {
     );
 
     // Build the prompt
+    const customerRequirements = natural_language || 
+      `Budget: ${budget || 'Not specified'}, Vehicle Type: ${vehicle_type || 'Any'}, Features: ${Array.isArray(features) ? features.join(', ') : features || 'None'}, Year: ${year_min || 'Any'}-${year_max || 'Current'}, Max Mileage: ${max_miles || 'No limit'}`;
+    
     const prompt = `${agentPrompt}
 
 Customer Requirements:
 - Name: ${customer?.name || 'Customer'}
-- Budget: ${budget || 'Not specified'}
-- Vehicle Type: ${vehicle_type || 'Any'}
-- Must-Have Features: ${Array.isArray(features) ? features.join(', ') : features || 'None specified'}
-- Year Range: ${year_min || 'Any'}-${year_max || 'Current'}
-- Max Mileage: ${max_miles || 'No limit'}
-- Preferred Colors: ${colors || 'No preference'}
+- Description: ${customerRequirements}
 
-Available Inventory:
-${JSON.stringify(MOCK_INVENTORY, null, 2)}
+Available Inventory (${inventory.length} vehicles):
+${JSON.stringify(inventory.slice(0, 20), null, 2)}
 
 Task: 
 1. Score each vehicle against customer requirements

@@ -233,35 +233,45 @@ function ToolInterface({ tool, onBack }: ToolInterfaceProps) {
       case 'used-vehicle-match':
         return (
           <>
-            <FormField
-              label="Budget Range"
-              name="budget"
-              placeholder="e.g., $25K-$32K"
-              value={formData.budget || ''}
-              onChange={(v) => setFormData({ ...formData, budget: v })}
-            />
-            <FormField
-              label="Vehicle Type"
-              name="vehicle_type"
-              placeholder="e.g., SUV, Sedan, Truck"
-              value={formData.vehicle_type || ''}
-              onChange={(v) => setFormData({ ...formData, vehicle_type: v })}
-            />
-            <FormField
-              label="Must-Have Features (comma-separated)"
-              name="features"
-              placeholder="e.g., AWD, Sunroof, Backup Camera"
-              value={formData.features || ''}
-              onChange={(v) => setFormData({ ...formData, features: v })}
-            />
-            <FormField
-              label="Max Mileage"
-              name="max_miles"
-              placeholder="e.g., 40000"
-              type="number"
-              value={formData.max_miles || ''}
-              onChange={(v) => setFormData({ ...formData, max_miles: v })}
-            />
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Describe what the customer is looking for:
+              </label>
+              <textarea
+                name="natural_language"
+                value={formData.natural_language || ''}
+                onChange={(e) => setFormData({ ...formData, natural_language: e.target.value })}
+                placeholder="e.g., budget $25k, SUV, low miles, certified preferred"
+                className="input w-full resize-none"
+                rows={4}
+              />
+              <div className="mt-2 text-sm text-gray-400">
+                <p className="font-semibold mb-1">Examples:</p>
+                <div className="space-y-1">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, natural_language: 'budget $25k, SUV, low miles, certified preferred' })}
+                    className="block text-left text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    • budget $25k, SUV, low miles, certified preferred
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, natural_language: 'first car for college student, reliable, under $15k' })}
+                    className="block text-left text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    • first car for college student, reliable, under $15k
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, natural_language: 'towing capability 5000+ lbs, 4WD, max 50k miles' })}
+                    className="block text-left text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    • towing capability 5000+ lbs, 4WD, max 50k miles
+                  </button>
+                </div>
+              </div>
+            </div>
           </>
         );
 
