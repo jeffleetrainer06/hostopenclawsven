@@ -24,6 +24,7 @@ export default function SvenChat({ agentId = 'sven' }: SvenChatProps) {
       buzz: "Hey Jeff! 📱 I'm Buzz, your social media strategist.\n\n✅ Content ideas (Instagram, Facebook, TikTok)\n✅ Post copy & video scripts\n✅ Hashtag strategy\n✅ Campaign planning\n\nNeed content for today?",
       echo: "Hey Jeff! 💬 I'm Echo, your customer communication specialist.\n\n✅ Follow-up message drafting\n✅ Appointment reminders\n✅ Objection handling scripts\n✅ Re-engagement campaigns\n\nWho needs a follow-up?",
       atlas: "Hey Jeff! 📊 I'm Atlas, your analytics specialist.\n\n✅ Performance dashboards\n✅ Sales tracking\n✅ Goal progress\n✅ Forecasting\n\nWhat metrics do you want to see?",
+      forge: "Hey Jeff! 🔨 I'm Forge, your development specialist.\n\n✅ Build custom tools & calculators\n✅ Code generation (React, TypeScript, Python)\n✅ Lovable.dev integrations\n✅ Automation scripts\n\nWhat should we build today?",
     };
     
     return {

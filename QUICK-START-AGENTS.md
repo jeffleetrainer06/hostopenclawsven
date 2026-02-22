@@ -2,13 +2,14 @@
 
 ## What You Have Now
 
-### 5 Specialized AI Agents
+### 6 Specialized AI Agents
 
 1. **Sven** 🦞 - Main assistant & coordinator
 2. **Scout** 🔍 - Research & competitive intelligence  
 3. **Buzz** 📱 - Social media & content creation
 4. **Echo** 💬 - Customer communication specialist
 5. **Atlas** 📊 - Analytics & performance tracking
+6. **Forge** 🔨 - Development & tools builder
 
 ### In Your Command Center Dashboard
 
@@ -91,6 +92,25 @@
 - "Show me yesterday's numbers"
 - "What's my best-selling model?"
 - "Forecast end-of-month sales"
+
+---
+
+### 🔨 Forge (Development & Tools)
+**When to use:**
+- Building custom tools
+- Creating calculators
+- Automation scripts
+- Web app development
+- Lovable.dev projects
+
+**Example questions:**
+- "Build a trade-in value calculator"
+- "Create a payment estimator for customers"
+- "Automate follow-up messages"
+- "Build an ROI calculator for hybrids"
+- "Make a social media scheduler"
+
+**Special ability:** Can use Lovable.dev to build and deploy web apps in hours!
 
 ---
 

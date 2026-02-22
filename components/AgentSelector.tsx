@@ -44,6 +44,13 @@ export const agents: Agent[] = [
     description: 'Analytics & Reporting',
     color: 'orange',
   },
+  {
+    id: 'forge',
+    name: 'Forge',
+    emoji: '🔨',
+    description: 'Development & Tools Builder',
+    color: 'red',
+  },
 ];
 
 interface AgentSelectorProps {
@@ -63,6 +70,7 @@ export default function AgentSelector({ activeAgent, onSelectAgent }: AgentSelec
         pink: 'bg-pink-500/20 border-pink-500 text-pink-300',
         teal: 'bg-teal-500/20 border-teal-500 text-teal-300',
         orange: 'bg-orange-500/20 border-orange-500 text-orange-300',
+        red: 'bg-red-500/20 border-red-500 text-red-300',
       };
       return activeColors[color] || 'bg-gray-500/20 border-gray-500';
     }
