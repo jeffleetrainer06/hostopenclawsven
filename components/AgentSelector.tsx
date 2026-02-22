@@ -8,9 +8,11 @@ interface Agent {
   emoji: string;
   description: string;
   color: string;
+  avatar?: string;
 }
 
 // Core 4-agent team (Phase 1)
+// Avatar format: emoji for now, replace with image URLs when ready
 export const agents: Agent[] = [
   {
     id: 'christi',
@@ -18,6 +20,7 @@ export const agents: Agent[] = [
     emoji: '👔',
     description: 'Office Manager - Your right hand',
     color: 'purple',
+    avatar: '👩‍💼', // Long brown hair, glasses, professional
   },
   {
     id: 'scout',
@@ -25,6 +28,7 @@ export const agents: Agent[] = [
     emoji: '🔍',
     description: 'Research & Market Intelligence',
     color: 'blue',
+    avatar: '👩‍💻', // Blonde, modern, curious analyst
   },
   {
     id: 'echo',
@@ -32,6 +36,7 @@ export const agents: Agent[] = [
     emoji: '💬',
     description: 'Customer Concierge',
     color: 'teal',
+    avatar: '👩‍💼', // Black hair, friendly, empathetic
   },
   {
     id: 'forge',
@@ -39,6 +44,7 @@ export const agents: Agent[] = [
     emoji: '🔨',
     description: 'Development Specialist',
     color: 'red',
+    avatar: '👩‍🔧', // Red hair, tech-chic, creative maker
   },
 ];
 
