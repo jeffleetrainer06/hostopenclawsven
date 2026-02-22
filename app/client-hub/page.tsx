@@ -119,7 +119,10 @@ export default function ClientHub() {
                 customer={selectedCustomer}
                 onCustomerUpdate={loadCustomers}
               />
-              <ToolsSidebar customerId={selectedCustomer.id} />
+              <ToolsSidebar 
+                customerId={selectedCustomer.id}
+                customerName={selectedCustomer.name}
+              />
             </>
           ) : (
             <div className="flex-1 flex items-center justify-center bg-gray-900">

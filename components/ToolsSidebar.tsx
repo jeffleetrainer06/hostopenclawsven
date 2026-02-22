@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { customerTools, getFavoriteTools, type CustomerTool } from '@/lib/customer-tools';
+import { generatePortalLink, getPortalInviteSMS } from '@/lib/customer-portal';
 
 interface ToolsSidebarProps {
   customerId?: number;
+  customerName?: string;
 }
 
-export default function ToolsSidebar({ customerId }: ToolsSidebarProps) {
+export default function ToolsSidebar({ customerId, customerName }: ToolsSidebarProps) {
   const [favorites, setFavorites] = useState<Set<string>>(
     new Set(getFavoriteTools().map(t => t.id))
   );
@@ -114,19 +116,35 @@ Pedersen Toyota
         </div>
 
         {/* Customer Portal Section */}
-        {customerId && (
+        {customerId && customerName && (
           <div className="pt-4 border-t border-gray-800">
             <h4 className="text-sm font-semibold text-teal-400 mb-3">
               CUSTOMER PORTAL (90-DAY ACCESS)
             </h4>
             <div className="space-y-2">
-              <button className="w-full text-left p-3 rounded-lg bg-teal-500/10 border border-teal-500/30 hover:bg-teal-500/20 transition-colors">
+              <button
+                onClick={() => {
+                  const baseUrl = window.location.origin;
+                  const portal = generatePortalLink(customerName, customerId, baseUrl);
+                  navigator.clipboard.writeText(getPortalInviteSMS(customerName, portal.url));
+                  alert(`✅ Portal link copied!\n\nText this to ${customerName}:\n\n${getPortalInviteSMS(customerName, portal.url)}`);
+                }}
+                className="w-full text-left p-3 rounded-lg bg-teal-500/10 border border-teal-500/30 hover:bg-teal-500/20 transition-colors"
+              >
                 <div className="flex items-center gap-2 text-sm">
                   <span>📋</span>
                   <span className="text-teal-300">Get Link to Text Customer (90 days)</span>
                 </div>
               </button>
-              <button className="w-full text-left p-3 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-750 transition-colors">
+              <button
+                onClick={() => {
+                  const baseUrl = window.location.origin;
+                  const portal = generatePortalLink(customerName, customerId, baseUrl);
+                  // TODO: Add this message to the chat
+                  alert(`✅ Portal invite ready!\n\nSend this in chat:\n\n${portal.message}`);
+                }}
+                className="w-full text-left p-3 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-750 transition-colors"
+              >
                 <div className="flex items-center gap-2 text-sm text-gray-300">
                   <span>✉️</span>
                   <span>Send Portal Invite (in chat)</span>

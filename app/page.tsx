@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
-import ModelSelector from '@/components/ModelSelector';
+import SvenChat from '@/components/SvenChat';
 
 export default function Dashboard() {
   const [currentModel, setCurrentModel] = useState('anthropic/claude-sonnet-4-5');
@@ -48,25 +48,20 @@ export default function Dashboard() {
                 {monthName} {year} · Pedersen Toyota
               </p>
             </div>
-            <div className="flex items-center gap-4">
-              <ModelSelector
-                currentModel={currentModel}
-                onModelChange={setCurrentModel}
-                compact
-              />
-              <Link
-                href="/client-hub"
-                className="btn btn-primary flex items-center gap-2"
-              >
-                <span>💬</span>
-                Chat with Sven
-              </Link>
-            </div>
+            <Link
+              href="/client-hub"
+              className="btn btn-primary flex items-center gap-2"
+            >
+              <span>👥</span>
+              Client Hub
+            </Link>
           </div>
         </header>
 
-        {/* Main Content */}
-        <div className="p-6 space-y-6">
+        {/* Main Content - Two Column Layout */}
+        <div className="flex gap-6 p-6 h-[calc(100vh-120px)]">
+          {/* Left Column - Dashboard Content */}
+          <div className="flex-1 overflow-y-auto space-y-6 pr-2">
           {/* Quote */}
           <div className="card bg-gradient-to-r from-red-500/20 to-purple-500/20 border-red-500/30">
             <div className="flex items-start gap-4">
@@ -179,6 +174,11 @@ export default function Dashboard() {
               <div className="text-4xl mb-2">💰</div>
               <div className="font-medium">Budget</div>
             </Link>
+          </div>
+
+          {/* Right Column - Sven Chat */}
+          <div className="w-[500px] flex-shrink-0">
+            <SvenChat />
           </div>
         </div>
       </main>
