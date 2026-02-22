@@ -72,20 +72,43 @@ export default function SvenChat({ agentId = 'sven' }: SvenChatProps) {
     setLoading(true);
 
     try {
-      // TODO: Connect to OpenClaw gateway
-      // For now, show a helpful response
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Call OpenClaw API
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          agent: agentId,
+          message: userMessage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const data = await response.json();
 
       const agentResponse: Message = {
         id: messages.length + 2,
         sender: 'agent',
-        message: `I'm currently in demo mode. To enable full AI functionality:\n\n1. Connect your OpenClaw gateway\n2. Set OPENCLAW_GATEWAY_URL environment variable\n3. Redeploy on Vercel\n\nFor now, I can help you navigate the Command Center! What would you like to do?`,
+        message: data.response || 'Sorry, I encountered an error. Please try again.',
         timestamp: Date.now() / 1000,
       };
 
       setMessages(prev => [...prev, agentResponse]);
     } catch (error) {
       console.error('Failed to send message:', error);
+      
+      const errorMsg: Message = {
+        id: messages.length + 2,
+        sender: 'agent',
+        message: `I'm having trouble connecting to OpenClaw. Error: ${error instanceof Error ? error.message : 'Unknown error'}\n\nMake sure the gateway is running and OPENCLAW_GATEWAY_URL is set.`,
+        timestamp: Date.now() / 1000,
+      };
+      
+      setMessages(prev => [...prev, errorMsg]);
     } finally {
       setLoading(false);
     }
