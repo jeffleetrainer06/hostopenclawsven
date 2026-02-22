@@ -10,7 +10,7 @@ interface Agent {
   color: string;
 }
 
-// Core 3-agent team (Phase 1)
+// Core 4-agent team (Phase 1)
 export const agents: Agent[] = [
   {
     id: 'christi',
@@ -33,6 +33,13 @@ export const agents: Agent[] = [
     description: 'Customer Concierge',
     color: 'teal',
   },
+  {
+    id: 'forge',
+    name: 'Forge',
+    emoji: '🔨',
+    description: 'Development Specialist',
+    color: 'red',
+  },
 ];
 
 // Coming soon (Phase 2)
@@ -50,13 +57,6 @@ export const comingSoonAgents: Agent[] = [
     emoji: '📊',
     description: 'Analytics Expert',
     color: 'orange',
-  },
-  {
-    id: 'forge',
-    name: 'Forge',
-    emoji: '🔨',
-    description: 'Development Specialist',
-    color: 'red',
   },
 ];
 

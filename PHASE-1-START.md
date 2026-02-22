@@ -1,14 +1,15 @@
-# 🚀 Phase 1: Your 3-Agent Dealership Team
+# 🚀 Phase 1: Your 4-Agent Dealership Team
 
-## Start Simple, Expand Later
+## Start with Core Operations + Development
 
-You're starting with the **essential three** - the core team that handles 80% of your daily work:
+You're starting with the **essential four** - the core team that handles your daily operations AND custom tool building:
 
 1. **👔 Christi** - Your office manager (coordinates everything)
 2. **🔍 Scout** - Your research analyst (data and comparisons)
 3. **💬 Echo** - Your customer concierge (follow-ups and messages)
+4. **🔨 Forge** - Your development specialist (builds custom tools)
 
-**Phase 2** agents (Buzz, Atlas, Forge) come later when you're ready.
+**Phase 2** agents (Buzz, Atlas) come later when you're ready.
 
 ---
 
@@ -102,6 +103,47 @@ Echo: "Let's check in gently. Here's a draft:
 
 ---
 
+## 🔨 Forge - Your Development Specialist
+
+**Forge specializes in:**
+- Building custom tools and calculators
+- Rapid prototyping with Lovable.dev
+- Automation scripts
+- Command Center customization
+- API integrations
+
+**Forge's Personality:**
+- Pragmatic maker, ships fast
+- Thinks in versions (v1, v2, v3)
+- Asks clarifying questions
+- Shows prototypes quickly
+
+**When to use Forge:**
+- "Build a payment calculator"
+- "Automate this task"
+- "Create a tool for customers"
+- "Add feature to Command Center"
+
+**Example:**
+```
+You → Forge: "Build a trade-in value calculator for customers"
+
+Forge: "Great idea! Quick questions:
+       - For customers to use themselves or for you to show?
+       - On website or standalone link?
+       - Need to capture their contact info?
+       
+       I can build this with Lovable - have it done in 2-3 hours.
+       
+       v1: Basic calculator (year, make, model, mileage)
+       v2: Add condition selector
+       v3: Include 'Schedule Appraisal' CTA
+       
+       Sound good?"
+```
+
+---
+
 ## 🔄 How They Work Together
 
 ### Scenario 1: Customer Comparison Question
@@ -177,7 +219,7 @@ openclaw gateway restart
 
 ### Step 3: Test Each Agent
 ```bash
-# Talk to Christi
+# Talk to Christi (coordinates everything)
 openclaw chat --agent christi "Give me today's priorities"
 
 # Ask Scout for research
@@ -185,6 +227,9 @@ openclaw chat --agent scout "Compare 2024 RAV4 vs Honda CR-V"
 
 # Get Echo to draft follow-up
 openclaw chat --agent echo "Draft follow-up for customer who test drove Camry 3 days ago"
+
+# Ask Forge to build tool
+openclaw chat --agent forge "Build a simple payment calculator"
 ```
 
 ### Step 4: Try a Workflow
@@ -290,17 +335,16 @@ Want to run updated numbers? Or any other questions?
 ## 📈 When to Add Phase 2 Agents
 
 **You're ready for Phase 2 when:**
-- ✅ You're comfortable with Christi, Scout, Echo
+- ✅ You're comfortable with Christi, Scout, Echo, Forge
 - ✅ Using them daily
 - ✅ Workflows are smooth
+- ✅ Forge has built a few tools for you
 - ✅ You want social media automation (Buzz)
-- ✅ You need analytics dashboards (Atlas)
-- ✅ You want custom tools built (Forge)
+- ✅ You need performance analytics (Atlas)
 
 **Phase 2 adds:**
 - 📱 **Buzz** - Social media content creator
-- 📊 **Atlas** - Performance analytics
-- 🔨 **Forge** - Custom tool builder
+- 📊 **Atlas** - Performance analytics & reporting
 
 ---
 
@@ -326,23 +370,61 @@ Want to run updated numbers? Or any other questions?
 ## ✅ Success Metrics
 
 **Week 1:**
-- [ ] All 3 agents configured and working
+- [ ] All 4 agents configured and working
 - [ ] Tested each agent individually
 - [ ] Completed one multi-agent workflow
 - [ ] Used morning briefing feature
+- [ ] Forge built first custom tool
 
 **Week 2:**
 - [ ] Daily morning briefings with Christi
 - [ ] Using Scout for all customer comparisons
 - [ ] Echo drafting most follow-ups
+- [ ] Forge building tools as needed
 - [ ] Feeling more organized
 
 **Month 1:**
 - [ ] Can't imagine working without the team
-- [ ] Ready to add Phase 2 agents
+- [ ] Forge has built 3-5 useful tools
+- [ ] Ready to add Phase 2 agents (Buzz, Atlas)
 - [ ] Closing more deals
 - [ ] Less time on admin tasks
 
 ---
 
 **Your dealership team is ready. Start with Christi - she'll guide you!** 👔🚀
+
+### Scenario 4: Building a Custom Tool
+
+```
+You → Christi: "I need a payment calculator for customers"
+
+Christi: "Perfect for Forge! Let me coordinate..."
+  └→ Forge: "Build customer payment calculator"
+
+Forge: "Great idea! Quick questions:
+       - For customers to use themselves or for you to show?
+       - Standalone link or embed on website?
+       - Features: Trade-in? Down payment? Term comparison?
+       
+       I can build with Lovable - 2-3 hours. Want me to start?"
+
+You: "For customers, standalone link, include trade-in and term comparison"
+
+Forge: "Perfect! Building now...
+       
+       v1: Basic payment calc
+       v2: Add trade-in value input
+       v3: Show 36/48/60 month comparison
+       v4: Include 'Get Pre-Approved' button
+       
+       I'll ping you when it's ready to test."
+
+[2 hours later]
+
+Forge → Christi: "Calculator is live: payment-calc.lovable.app
+                  Tested on mobile and desktop. Ready for Jeff."
+
+Christi → You: "Forge built your calculator, hon! Link: payment-calc.lovable.app
+                Test it out and let her know if you want tweaks."
+```
