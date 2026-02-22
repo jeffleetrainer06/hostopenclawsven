@@ -12,8 +12,8 @@ class OpenClawClient {
   private gatewayUrl: string;
   private sessions: Map<string, string> = new Map(); // customerId -> sessionKey
 
-  constructor(gatewayUrl: string = 'ws://127.0.0.1:18789') {
-    this.gatewayUrl = gatewayUrl;
+  constructor(gatewayUrl?: string) {
+    this.gatewayUrl = gatewayUrl || process.env.OPENCLAW_GATEWAY_URL || 'ws://127.0.0.1:18789';
   }
 
   async connect(): Promise<void> {
