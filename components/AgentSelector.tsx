@@ -12,7 +12,6 @@ interface Agent {
 }
 
 // Core 4-agent team (Phase 1)
-// Avatar format: emoji for now, replace with image URLs when ready
 export const agents: Agent[] = [
   {
     id: 'christi',
@@ -20,49 +19,50 @@ export const agents: Agent[] = [
     emoji: '👔',
     description: 'Office Manager - Your right hand',
     color: 'purple',
-    avatar: '👩‍💼', // Long brown hair, glasses, professional
+    avatar: '/avatars/christi.png',
   },
   {
-    id: 'scout',
-    name: 'Scout',
-    emoji: '🔍',
-    description: 'Research & Market Intelligence',
+    id: 'isaac',
+    name: 'Isaac',
+    emoji: '🔬',
+    description: 'Research Agent - After Isaac Newton',
     color: 'blue',
-    avatar: '👩‍💻', // Blonde, modern, curious analyst
+    avatar: '/avatars/isaac.png',
   },
   {
-    id: 'echo',
-    name: 'Echo',
-    emoji: '💬',
-    description: 'Customer Concierge',
+    id: 'linda',
+    name: 'Linda',
+    emoji: '👥',
+    description: 'Customer Follow-Up Agent',
     color: 'teal',
-    avatar: '👩‍💼', // Black hair, friendly, empathetic
+    avatar: '/avatars/linda.png',
   },
   {
-    id: 'forge',
-    name: 'Forge',
-    emoji: '🔨',
-    description: 'Development Specialist',
+    id: 'margaret',
+    name: 'Margaret',
+    emoji: '💻',
+    description: 'Chief Coder - After Margaret Hamilton',
     color: 'red',
-    avatar: '👩‍🔧', // Red hair, tech-chic, creative maker
+    avatar: '/avatars/margaret.png',
   },
 ];
 
 // Coming soon (Phase 2)
 export const comingSoonAgents: Agent[] = [
   {
-    id: 'buzz',
-    name: 'Buzz',
+    id: 'seth',
+    name: 'Seth',
     emoji: '📱',
-    description: 'Social Media Creator',
-    color: 'pink',
+    description: 'Social Media Agent - After Seth Godin',
+    color: 'orange',
+    avatar: '/avatars/seth.png',
   },
   {
     id: 'atlas',
     name: 'Atlas',
     emoji: '📊',
     description: 'Analytics Expert',
-    color: 'orange',
+    color: 'green',
   },
 ];
 

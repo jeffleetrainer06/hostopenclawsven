@@ -19,13 +19,12 @@ export default function SvenChat({ agentId = 'sven' }: SvenChatProps) {
   const agent = agents.find(a => a.id === agentId) || agents[0];
   const getInitialMessage = (agentId: string): Message => {
     const messages: Record<string, string> = {
-      christi: "Morning, hon! 👔 I'm Christi, your office manager. I keep everything running smoothly around here.\n\n✅ Coordinating Scout and Echo\n✅ Managing your priorities\n✅ Daily briefings\n✅ Keeping you organized\n\nWhat do you need today?",
+      christi: "Morning, hon! 👔 I'm Christi, your office manager. I keep everything running smoothly around here.\n\n✅ Coordinating Isaac, Linda, and Margaret\n✅ Managing your priorities\n✅ Daily briefings\n✅ Keeping you organized\n\nWhat do you need today?",
+      isaac: "Good day, Jeff! 🔬 I'm Isaac, your research specialist. Named after Isaac Newton - I believe in the power of observation and analysis.\n\n✅ Industry trends & automotive news\n✅ Vehicle specs & detailed comparisons\n✅ Competitor intelligence\n✅ Market research & data\n\nWhat shall we investigate today?",
+      linda: "Hi Jeff! 👥 I'm Linda, your customer follow-up specialist. I'm here to help you nurture those customer relationships with care and attention.\n\n✅ Personalized follow-up messages\n✅ Thoughtful communication strategies\n✅ Detailed customer tracking\n✅ Kind, professional outreach\n\nWho should we reach out to today?",
+      margaret: "Hey Jeff! 💻 I'm Margaret, your chief coder! Named after Margaret Hamilton who got us to the moon - I love building things that work.\n\n✅ Custom tools & calculators\n✅ Quick prototypes (Lovable.dev)\n✅ Automation & integrations\n✅ Command Center features\n\nWhat should we build?",
+      seth: "Hey Jeff! 📱 I'm Seth, your social media strategist. Named after Seth Godin - I believe in remarkable content that people want to share.\n\n✅ Content that resonates\n✅ Story-driven posts\n✅ Permission marketing\n✅ Building your tribe\n\nWhat story should we tell today?",
       sven: "Hey Jeff! 👋 I'm Sven, your main assistant. I coordinate the team and help with anything you need.\n\n✅ Managing your Command Center\n✅ Coordinating other agents\n✅ Strategic decisions\n✅ Daily planning\n\nWhat can I help you with today?",
-      scout: "Hey Jeff! 🔍 I'm Scout, your research specialist.\n\n✅ Industry trends & news\n✅ Vehicle specs & comparisons\n✅ Competitor analysis\n✅ Market intelligence\n\nWhat do you want to research?",
-      buzz: "Hey Jeff! 📱 I'm Buzz, your social media strategist.\n\n✅ Content ideas (Instagram, Facebook, TikTok)\n✅ Post copy & video scripts\n✅ Hashtag strategy\n✅ Campaign planning\n\nNeed content for today?",
-      echo: "Hey Jeff! 💬 I'm Echo, your customer communication specialist.\n\n✅ Follow-up message drafting\n✅ Appointment reminders\n✅ Objection handling scripts\n✅ Re-engagement campaigns\n\nWho needs a follow-up?",
-      atlas: "Hey Jeff! 📊 I'm Atlas, your analytics specialist.\n\n✅ Performance dashboards\n✅ Sales tracking\n✅ Goal progress\n✅ Forecasting\n\nWhat metrics do you want to see?",
-      forge: "Hey Jeff! 🔨 I'm Forge, your development specialist.\n\n✅ Build custom tools & calculators\n✅ Code generation (React, TypeScript, Python)\n✅ Lovable.dev integrations\n✅ Automation scripts\n\nWhat should we build today?",
     };
     
     return {
