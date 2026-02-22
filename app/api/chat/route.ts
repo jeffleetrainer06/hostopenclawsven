@@ -18,15 +18,15 @@ async function sendToAgent(gatewayUrl: string, agentId: string, message: string)
     }, 30000);
 
     ws.on('open', () => {
-      // Send RPC call to sessions_send
+      // Send to main session with agent routing
+      const routedMessage = `[Command Center → ${agentId.toUpperCase()}]\n\n${message}\n\n(Respond as ${agentId} from Jeff's Toyota team. See JEFF-AGENTS.md for personality.)`;
+      
       const rpcRequest = {
         jsonrpc: '2.0',
         id: Date.now(),
-        method: 'sessions_send',
+        method: 'chat',
         params: {
-          label: agentId,
-          message: message,
-          timeoutSeconds: 25
+          message: routedMessage
         }
       };
       ws.send(JSON.stringify(rpcRequest));
@@ -35,16 +35,24 @@ async function sendToAgent(gatewayUrl: string, agentId: string, message: string)
     ws.on('message', (data) => {
       try {
         const response = JSON.parse(data.toString());
-        if (response.result) {
-          responseReceived = true;
-          clearTimeout(timeout);
-          ws.close();
-          resolve(response.result.message || response.result.response || 'No response from agent');
-        } else if (response.error) {
-          responseReceived = true;
-          clearTimeout(timeout);
-          ws.close();
-          reject(new Error(response.error.message || 'Agent error'));
+        // Handle RPC response
+        if (response.id && (response.result || response.error)) {
+          if (response.result) {
+            responseReceived = true;
+            clearTimeout(timeout);
+            ws.close();
+            // Extract message from result
+            const message = response.result.message || 
+                          response.result.content || 
+                          response.result.response || 
+                          JSON.stringify(response.result);
+            resolve(message);
+          } else if (response.error) {
+            responseReceived = true;
+            clearTimeout(timeout);
+            ws.close();
+            reject(new Error(response.error.message || 'RPC error'));
+          }
         }
       } catch (e) {
         console.error('Parse error:', e);
