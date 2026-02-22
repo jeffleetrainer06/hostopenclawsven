@@ -176,6 +176,7 @@ export default function Dashboard() {
               <div className="font-medium">Budget</div>
             </Link>
           </div>
+          </div>
 
           {/* Right Column - Agent Team */}
           <div className="w-[600px] flex-shrink-0 flex flex-col gap-4">
