@@ -1,7 +1,69 @@
 import { NextResponse } from 'next/server';
+import WebSocket from 'ws';
 
 // Mark as dynamic
 export const dynamic = 'force-dynamic';
+
+// Simple RPC call to OpenClaw gateway
+async function sendToAgent(gatewayUrl: string, agentId: string, message: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const ws = new WebSocket(gatewayUrl);
+    let responseReceived = false;
+
+    const timeout = setTimeout(() => {
+      if (!responseReceived) {
+        ws.close();
+        reject(new Error('Request timeout'));
+      }
+    }, 30000);
+
+    ws.on('open', () => {
+      // Send RPC call to sessions_send
+      const rpcRequest = {
+        jsonrpc: '2.0',
+        id: Date.now(),
+        method: 'sessions_send',
+        params: {
+          label: agentId,
+          message: message,
+          timeoutSeconds: 25
+        }
+      };
+      ws.send(JSON.stringify(rpcRequest));
+    });
+
+    ws.on('message', (data) => {
+      try {
+        const response = JSON.parse(data.toString());
+        if (response.result) {
+          responseReceived = true;
+          clearTimeout(timeout);
+          ws.close();
+          resolve(response.result.message || response.result.response || 'No response from agent');
+        } else if (response.error) {
+          responseReceived = true;
+          clearTimeout(timeout);
+          ws.close();
+          reject(new Error(response.error.message || 'Agent error'));
+        }
+      } catch (e) {
+        console.error('Parse error:', e);
+      }
+    });
+
+    ws.on('error', (error) => {
+      clearTimeout(timeout);
+      reject(error);
+    });
+
+    ws.on('close', () => {
+      clearTimeout(timeout);
+      if (!responseReceived) {
+        reject(new Error('Connection closed without response'));
+      }
+    });
+  });
+}
 
 export async function POST(request: Request) {
   try {
@@ -23,14 +85,15 @@ export async function POST(request: Request) {
       });
     }
 
-    // Simple HTTP-based approach for now
-    // In production, you'd use WebSocket, but for initial testing this works
-    
-    // For now, return a "connected" message to test the flow
-    // TODO: Implement actual OpenClaw WebSocket connection
-    const response = `[Testing connection to ${agent}]\n\nGateway URL configured: ${gatewayUrl}\n\nYou said: "${message}"\n\nFull OpenClaw integration coming in next step! For now, this proves the connection is working.`;
-
-    return NextResponse.json({ response });
+    try {
+      const response = await sendToAgent(gatewayUrl, agent, message);
+      return NextResponse.json({ response });
+    } catch (error) {
+      console.error(`Failed to contact agent ${agent}:`, error);
+      return NextResponse.json({
+        response: `Sorry, I'm having trouble connecting to ${agent} right now. Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      });
+    }
   } catch (error) {
     console.error('Chat API error:', error);
     return NextResponse.json(
