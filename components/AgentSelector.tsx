@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 interface Agent {
   id: string;
   name: string;
@@ -8,47 +10,52 @@ interface Agent {
   color: string;
 }
 
+// Core 3-agent team (Phase 1)
 export const agents: Agent[] = [
   {
-    id: 'sven',
-    name: 'Sven',
-    emoji: '🦞',
-    description: 'Main Assistant - Coordinates everything',
+    id: 'christi',
+    name: 'Christi',
+    emoji: '👔',
+    description: 'Office Manager - Your right hand',
     color: 'purple',
   },
   {
     id: 'scout',
     name: 'Scout',
     emoji: '🔍',
-    description: 'Research & Intelligence',
+    description: 'Research & Market Intelligence',
     color: 'blue',
-  },
-  {
-    id: 'buzz',
-    name: 'Buzz',
-    emoji: '📱',
-    description: 'Social Media & Marketing',
-    color: 'pink',
   },
   {
     id: 'echo',
     name: 'Echo',
     emoji: '💬',
-    description: 'Customer Communications',
+    description: 'Customer Concierge',
     color: 'teal',
+  },
+];
+
+// Coming soon (Phase 2)
+export const comingSoonAgents: Agent[] = [
+  {
+    id: 'buzz',
+    name: 'Buzz',
+    emoji: '📱',
+    description: 'Social Media Creator',
+    color: 'pink',
   },
   {
     id: 'atlas',
     name: 'Atlas',
     emoji: '📊',
-    description: 'Analytics & Reporting',
+    description: 'Analytics Expert',
     color: 'orange',
   },
   {
     id: 'forge',
     name: 'Forge',
     emoji: '🔨',
-    description: 'Development & Tools Builder',
+    description: 'Development Specialist',
     color: 'red',
   },
 ];
@@ -59,6 +66,7 @@ interface AgentSelectorProps {
 }
 
 export default function AgentSelector({ activeAgent, onSelectAgent }: AgentSelectorProps) {
+  const [showComingSoon, setShowComingSoon] = useState(false);
   const getColorClasses = (agentId: string, isActive: boolean) => {
     const agent = agents.find(a => a.id === agentId);
     const color = agent?.color || 'gray';
@@ -80,7 +88,7 @@ export default function AgentSelector({ activeAgent, onSelectAgent }: AgentSelec
 
   return (
     <div className="space-y-2">
-      <h4 className="text-xs font-semibold text-gray-400 px-2">YOUR AGENT TEAM</h4>
+      <h4 className="text-xs font-semibold text-gray-400 px-2">YOUR AGENT TEAM (PHASE 1)</h4>
       {agents.map((agent) => {
         const isActive = activeAgent === agent.id;
         return (
@@ -100,6 +108,36 @@ export default function AgentSelector({ activeAgent, onSelectAgent }: AgentSelec
           </button>
         );
       })}
+      
+      {/* Coming Soon Section */}
+      <div className="pt-4 mt-4 border-t border-gray-800">
+        <button
+          onClick={() => setShowComingSoon(!showComingSoon)}
+          className="w-full text-left text-xs font-semibold text-gray-500 px-2 hover:text-gray-400 transition-colors"
+        >
+          {showComingSoon ? '▼' : '▶'} COMING SOON (PHASE 2)
+        </button>
+        
+        {showComingSoon && (
+          <div className="mt-2 space-y-2">
+            {comingSoonAgents.map((agent) => (
+              <div
+                key={agent.id}
+                className="px-3 py-2.5 rounded-lg bg-gray-800/50 border-2 border-gray-700/50 opacity-50 cursor-not-allowed"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">{agent.emoji}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-sm text-gray-400">{agent.name}</div>
+                    <div className="text-xs text-gray-500 truncate">{agent.description}</div>
+                  </div>
+                  <span className="text-xs text-gray-500">Soon</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

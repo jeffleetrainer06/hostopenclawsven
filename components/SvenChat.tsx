@@ -19,6 +19,7 @@ export default function SvenChat({ agentId = 'sven' }: SvenChatProps) {
   const agent = agents.find(a => a.id === agentId) || agents[0];
   const getInitialMessage = (agentId: string): Message => {
     const messages: Record<string, string> = {
+      christi: "Morning, hon! 👔 I'm Christi, your office manager. I keep everything running smoothly around here.\n\n✅ Coordinating Scout and Echo\n✅ Managing your priorities\n✅ Daily briefings\n✅ Keeping you organized\n\nWhat do you need today?",
       sven: "Hey Jeff! 👋 I'm Sven, your main assistant. I coordinate the team and help with anything you need.\n\n✅ Managing your Command Center\n✅ Coordinating other agents\n✅ Strategic decisions\n✅ Daily planning\n\nWhat can I help you with today?",
       scout: "Hey Jeff! 🔍 I'm Scout, your research specialist.\n\n✅ Industry trends & news\n✅ Vehicle specs & comparisons\n✅ Competitor analysis\n✅ Market intelligence\n\nWhat do you want to research?",
       buzz: "Hey Jeff! 📱 I'm Buzz, your social media strategist.\n\n✅ Content ideas (Instagram, Facebook, TikTok)\n✅ Post copy & video scripts\n✅ Hashtag strategy\n✅ Campaign planning\n\nNeed content for today?",

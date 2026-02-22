@@ -7,7 +7,7 @@ import SvenChat from '@/components/SvenChat';
 import AgentSelector from '@/components/AgentSelector';
 
 export default function Dashboard() {
-  const [activeAgent, setActiveAgent] = useState('sven');
+  const [activeAgent, setActiveAgent] = useState('christi');
   const [stats, setStats] = useState({
     activeLeads: 0,
     testDrives: 0,
