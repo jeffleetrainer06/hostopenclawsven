@@ -2,23 +2,44 @@
 
 import { useState, useEffect, useRef } from 'react';
 import ModelSelector from './ModelSelector';
+import { agents } from './AgentSelector';
 
 interface Message {
   id: number;
-  sender: 'jeff' | 'sven';
+  sender: 'jeff' | 'agent';
   message: string;
   timestamp: number;
 }
 
-export default function SvenChat() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
+interface SvenChatProps {
+  agentId?: string;
+}
+
+export default function SvenChat({ agentId = 'sven' }: SvenChatProps) {
+  const agent = agents.find(a => a.id === agentId) || agents[0];
+  const getInitialMessage = (agentId: string): Message => {
+    const messages: Record<string, string> = {
+      sven: "Hey Jeff! 👋 I'm Sven, your main assistant. I coordinate the team and help with anything you need.\n\n✅ Managing your Command Center\n✅ Coordinating other agents\n✅ Strategic decisions\n✅ Daily planning\n\nWhat can I help you with today?",
+      scout: "Hey Jeff! 🔍 I'm Scout, your research specialist.\n\n✅ Industry trends & news\n✅ Vehicle specs & comparisons\n✅ Competitor analysis\n✅ Market intelligence\n\nWhat do you want to research?",
+      buzz: "Hey Jeff! 📱 I'm Buzz, your social media strategist.\n\n✅ Content ideas (Instagram, Facebook, TikTok)\n✅ Post copy & video scripts\n✅ Hashtag strategy\n✅ Campaign planning\n\nNeed content for today?",
+      echo: "Hey Jeff! 💬 I'm Echo, your customer communication specialist.\n\n✅ Follow-up message drafting\n✅ Appointment reminders\n✅ Objection handling scripts\n✅ Re-engagement campaigns\n\nWho needs a follow-up?",
+      atlas: "Hey Jeff! 📊 I'm Atlas, your analytics specialist.\n\n✅ Performance dashboards\n✅ Sales tracking\n✅ Goal progress\n✅ Forecasting\n\nWhat metrics do you want to see?",
+    };
+    
+    return {
       id: 1,
-      sender: 'sven',
-      message: "Hey Jeff! 👋 I'm Sven, your AI assistant. I'm here to help you with:\n\n✅ Analyzing customer data\n✅ Drafting messages\n✅ Managing your Command Center\n✅ Finding vehicle information\n✅ Generating reports\n\nWhat can I help you with today?",
+      sender: 'agent',
+      message: messages[agentId] || messages.sven,
       timestamp: Date.now() / 1000,
-    }
-  ]);
+    };
+  };
+
+  const [messages, setMessages] = useState<Message[]>([getInitialMessage(agentId)]);
+
+  // Reset messages when agent changes
+  useEffect(() => {
+    setMessages([getInitialMessage(agentId)]);
+  }, [agentId]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [currentModel, setCurrentModel] = useState('anthropic/claude-sonnet-4-5');
@@ -54,14 +75,14 @@ export default function SvenChat() {
       // For now, show a helpful response
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const svenResponse: Message = {
+      const agentResponse: Message = {
         id: messages.length + 2,
-        sender: 'sven',
-        message: "I'm currently in demo mode. To enable full AI functionality:\n\n1. Connect your OpenClaw gateway\n2. Set OPENCLAW_GATEWAY_URL environment variable\n3. Redeploy on Vercel\n\nFor now, I can help you navigate the Command Center! What would you like to do?",
+        sender: 'agent',
+        message: `I'm currently in demo mode. To enable full AI functionality:\n\n1. Connect your OpenClaw gateway\n2. Set OPENCLAW_GATEWAY_URL environment variable\n3. Redeploy on Vercel\n\nFor now, I can help you navigate the Command Center! What would you like to do?`,
         timestamp: Date.now() / 1000,
       };
 
-      setMessages(prev => [...prev, svenResponse]);
+      setMessages(prev => [...prev, agentResponse]);
     } catch (error) {
       console.error('Failed to send message:', error);
     } finally {
@@ -101,12 +122,12 @@ export default function SvenChat() {
       <div className="bg-gray-950 border-b border-gray-800 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-xl">
-              🤖
+            <div className={`w-10 h-10 rounded-full bg-gradient-to-br from-${agent.color}-500 to-${agent.color}-600 flex items-center justify-center text-xl`}>
+              {agent.emoji}
             </div>
             <div>
-              <h3 className="font-bold">Sven</h3>
-              <p className="text-xs text-gray-400">Your AI Assistant</p>
+              <h3 className="font-bold">{agent.name}</h3>
+              <p className="text-xs text-gray-400">{agent.description}</p>
             </div>
           </div>
           <ModelSelector
@@ -133,7 +154,7 @@ export default function SvenChat() {
             >
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xs opacity-75 font-semibold">
-                  {msg.sender === 'jeff' ? 'Jeff' : 'Sven'}
+                  {msg.sender === 'jeff' ? 'Jeff' : agent.name}
                 </span>
                 <span className="text-xs opacity-50">{formatTime(msg.timestamp)}</span>
               </div>
@@ -185,7 +206,7 @@ export default function SvenChat() {
                 handleSend();
               }
             }}
-            placeholder="Ask Sven anything..."
+            placeholder={`Ask ${agent.name} anything...`}
             className="flex-1 input resize-none"
             rows={2}
             disabled={loading}

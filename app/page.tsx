@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 import SvenChat from '@/components/SvenChat';
+import AgentSelector from '@/components/AgentSelector';
 
 export default function Dashboard() {
-  const [currentModel, setCurrentModel] = useState('anthropic/claude-sonnet-4-5');
+  const [activeAgent, setActiveAgent] = useState('sven');
   const [stats, setStats] = useState({
     activeLeads: 0,
     testDrives: 0,
@@ -176,9 +177,19 @@ export default function Dashboard() {
             </Link>
           </div>
 
-          {/* Right Column - Sven Chat */}
-          <div className="w-[500px] flex-shrink-0">
-            <SvenChat />
+          {/* Right Column - Agent Team */}
+          <div className="w-[600px] flex-shrink-0 flex flex-col gap-4">
+            {/* Agent Selector */}
+            <div className="bg-gray-900 rounded-lg border border-gray-800 p-4">
+              <AgentSelector
+                activeAgent={activeAgent}
+                onSelectAgent={setActiveAgent}
+              />
+            </div>
+            {/* Agent Chat */}
+            <div className="flex-1">
+              <SvenChat agentId={activeAgent} />
+            </div>
           </div>
         </div>
       </main>
